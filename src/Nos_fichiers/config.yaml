@@ -1,0 +1,25 @@
+// Constantes pour les touches
+KRight               : x
+KLeft                : w
+KShoot               :   
+
+//  Constantes liées à l envahisseur
+KInvadersColor 		 : KJaune
+KInsideInvader       : W
+KMissile             : T
+KBegInvader 		 : 0
+KInvadersSize    	 : 5
+KMissileRatio 		 : 2
+
+// Constantes liées au joueur
+KInsideMe            : A
+KTorpedo			 : |
+KMyColor			 : KVert
+KMySize          	 : 4
+KRatioMeInvaders 	 : 4
+KBegMe				 : 5
+
+// Constantes liées à l'eapace (l'écran)
+KSizeLine   		 : 10
+KSizeSpace  		 : 10
+KEmpty               : 
