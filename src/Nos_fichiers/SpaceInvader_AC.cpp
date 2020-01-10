@@ -19,6 +19,9 @@
 #include "MyType_AC.h"
 #include "SpaceInvader_AC.h"
 #include "MyConst_AC.h"
+
+#include "nsutil.h"
+
 using namespace std;
 using namespace nsSpaceInvader_AC;
 
@@ -282,8 +285,69 @@ namespace nsSpaceInvader_AC
         }
     } //DeleteTorpedos ()
 
+    void StartMenu () {
+        DisplaysDoc("../src/Nos_fichiers/Invader.txt", 33, 5);
+        DisplaysDoc("../src/Nos_fichiers/SpaceInvadertext.txt", 11, 14);
+        GotoXY(29,22);
+        cout << "Press enter to continue" << endl;
+        getchar();
+        GotoXY(29,22);
+        cout << "                       " ;
+
+        // Menu
+        int X (4);
+        int Y (18);
+        GotoXY(X,++Y);
+        cout << "1 : Start" << endl;
+        GotoXY(X,++Y);
+        cout << "2 : Show config" << endl;
+        GotoXY(X,++Y);
+        cout << "3 : Show regle" << endl;
+        GotoXY(X,++Y);
+        cout << "4 : Credits" << endl;
+        GotoXY(X,++Y);
+        cout << "5 : Exit" << endl;
+
+        char C;
+        cin >> C;
+
+        switch (C) {
+        case '1'    :
+            ClearScreen();
+            set_input_mode ();
+            SpaceInvaders();
+            reset_input_mode();
+            break;
+        case '2'   :
+            cout << "Config";
+            break;
+
+        case '3'   :
+            cout << "Config 3";
+            break;
+        case '4'   :
+            ClearScreen();
+            DisplaysDoc("../Project-SpaceInvader/assets/Credit.txt");
+            break;
+        case '5'   :
+            ClearScreen();
+            DisplaysDoc("../Project-SpaceInvader/assets/End.txt", 20, 10);
+            GotoXY(0,23);
+            exit(-1);
+            break;
+
+        case 'r' | 'R'  :
+            cout << "R mode";
+            break;
+        }
+
+    }
+
     unsigned SpaceInvaders (void)
     {
+
+        StartMenu();
+
         CVString Space;
         CAObject Obj;
         InitSpace (Space, Obj);
@@ -335,6 +399,13 @@ namespace nsSpaceInvader_AC
         cout << endl;
     } //ShowFile ()
 
+
+    struct termios saved_attributes;
+
+    void reset_input_mode(void)
+    {
+      tcsetattr(STDIN_FILENO, TCSANOW, &saved_attributes);
+    }
     //http://www.gnu.org/software/libc/manual/html_node/Noncanon-Example.html
     void set_input_mode (void)
     {
@@ -358,7 +429,7 @@ namespace nsSpaceInvader_AC
     int ppal(const string & Path )
     {
         srand (time(NULL));
-        set_input_mode ();
+        //set_input_mode ();
         ShowFile (1 == SpaceInvaders () ? Path + "lost.txt" : Path + "win.txt");
         return 0;
     } //ppal ()

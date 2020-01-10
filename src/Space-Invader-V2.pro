@@ -5,17 +5,18 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     Nos_fichiers/SpaceInvader_AC.cpp \
-
-
-QMAKE_MAC_SDK = macosx10.11
+    Nos_fichiers/nsutil.cpp
 
 HEADERS += \
     Nos_fichiers/SpaceInvader_AC.h \
     Nos_fichiers/MyConst_AC.h \
     Nos_fichiers/MyType_AC.h \
+    Nos_fichiers/nsutil.h
 
 
 DISTFILES += \
+    Nos_fichiers/Invader.txt \
+    Nos_fichiers/SpaceInvadertext.txt \
     Nos_fichiers/config.yaml \
     Nos_fichiers/lost.txt \
     Nos_fichiers/win.txt

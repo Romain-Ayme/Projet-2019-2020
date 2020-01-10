@@ -179,6 +179,8 @@ namespace nsSpaceInvader_AC
      */
     void set_input_mode (void);
 
+    void reset_input_mode(void);
+
     /*!
      * \fn int ppal()
      * \brief Fonction principale du jeu.
