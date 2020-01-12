@@ -10,11 +10,9 @@
 #include <iostream>
 #include "Nos_fichiers/SpaceInvader_AC.h"
 using namespace std;
+using namespace nsSpaceInvader_AC;
 
-int main()
-{
-
-        nsSpaceInvader_AC::ppal("../Space-Invader-V2/Nos_fichiers/");
-        return 0;
-
-}
+int main () {
+    ppal("../src/Nos_fichiers/");
+    return 0;
+} // main ()

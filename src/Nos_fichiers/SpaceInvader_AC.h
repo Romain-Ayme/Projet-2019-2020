@@ -122,8 +122,9 @@ namespace nsSpaceInvader_AC
      * \brief Gère les collisions entre les objets et les vaisseaux. Si une collision est détéctée (même coordonées pour un objet et une partie d'un vaisseau), l'objet et la partie du vaisseau diparaissent
      * \param Objects [in, out] Vecteur des positions des objects à traiter
      * \param StarShips [in, out] Vecteur des positions des vaisseaux à traiter
+     * \param countScore [in] Indique si Invaders ou joueur pour augmenter le score
      */
-    void CollisionBetweenObjectsAndShips (CVPosition & Objects, CVPosition & StarShips);
+    void CollisionBetweenObjectsAndShips (CVPosition & Objects, CVPosition & StarShips, const bool countScore);
 
     /*!
      * \brief Gère les collisions (multiples) entre les missiles et les tropilles
@@ -178,6 +179,8 @@ namespace nsSpaceInvader_AC
      * voir : http://www.gnu.org/software/libc/manual/html_node/Noncanon-Example.html et http://man7.org/linux/man-pages/man3/termios.3.html
      */
     void set_input_mode (void);
+
+    void reset_input_mode(void);
 
     /*!
      * \fn int ppal()

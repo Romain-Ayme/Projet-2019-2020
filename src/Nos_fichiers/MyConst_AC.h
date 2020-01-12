@@ -86,7 +86,7 @@ namespace nsSpaceInvader_AC
     /*!
      * \brief Nombre de caractères qui forment l'envahisseur.
      */
-    const unsigned KInvadersSize    =  5;   // nombre de caractères qui forment l'envahisseur
+    const unsigned KInvadersSize    =  10;   // nombre de caractères qui forment l'envahisseur
 
     /*!
      * \brief Nombre de fois où l'envahisseur tire un missile par rapport à son déplacement.
@@ -112,7 +112,7 @@ namespace nsSpaceInvader_AC
     /*!
      * \brief Nombre de caractères qui forment mon vaisseau.
      */
-    const unsigned KMySize          = 4; //  nombre de caractères qui forment mon vaisseau
+    const unsigned KMySize          = 1; //  nombre de caractères qui forment mon vaisseau
 
 
     /*!
@@ -129,12 +129,12 @@ namespace nsSpaceInvader_AC
     /*!
      * \brief Nombre de lignes de l'écran (de l'espace).
      */
-    const unsigned KSizeLine   = 10;   // Nombre de lignes de l'écran (de l'espace)
+    const unsigned KSizeLine   = 20;   // Nombre de lignes de l'écran (de l'espace)
 
     /*!
      * \brief Nombre de colonnes de l'écran (de l'espace).
      */
-    const unsigned KSizeSpace  = 10;   // Nombre de colonnes de l'écran (de l'espace)
+    const unsigned KSizeSpace  = 50;   // Nombre de colonnes de l'écran (de l'espace)
 
     /*!
      * \brief Numéro de colonne où commence l'envahisseur.
@@ -144,10 +144,10 @@ namespace nsSpaceInvader_AC
     /*!
      * \brief Numéro de colonne où commence le joueur.
      */
-    const unsigned KBegMe      = KSizeLine / 2;  // Numéro de colonne où commence le joueur
+    const unsigned KBegMe      = KSizeSpace / 2;  // Numéro de colonne où commence le joueur
 
     /*!
      * \brief Alias vers une ligne vide de l'esapce.
      */
-    const std::string KEmptyLine (KSizeLine, KEmpty);  // Une ligne vide de la matrice
+    const std::string KEmptyLine (KSizeSpace, KEmpty);  // Une ligne vide de la matrice
 }//namespace
