@@ -13,6 +13,18 @@
 namespace nsSpaceInvader_AC
 {
     /*!
+     * \brief permet de crer le fichier highScore si il existe pas et d'afficher le score et le nom du joueur dans ce fichier si le score est plus élevé que le 10ème joueur dans highScore
+     * \param score [in] score du joueur
+     * \param file [in] fichier highScore
+     */
+    void HighScore(const unsigned score, const std::string & file); // Romain C
+
+    /*!
+     * \brief Permet d'afficher le score et la vie
+     */
+    void AfficheScore(unsigned score, unsigned vies); // Romain C
+
+    /*!
     * \fn Couleur
      * \param[in] Coul couleur du texte
      * \brief Fonction permettant de changer la couleur du texte.
@@ -45,7 +57,7 @@ namespace nsSpaceInvader_AC
      * \brief Permet d'afficher l'espace de jeu.
      * \param [in] Space Espace de jeu
      */
-    void DisplaySpace (const CVString & Space);
+    void DisplaySpace (const CVString & Space, unsigned score, unsigned vies); //Romain C
 
     /*!
      * \brief Permet d'initialiser l'espace de jeu et de définir les coordonnées des objets à placer au lancement du jeu.
@@ -124,20 +136,20 @@ namespace nsSpaceInvader_AC
      * \param StarShips [in, out] Vecteur des positions des vaisseaux à traiter
      * \param countScore [in] Indique si Invaders ou joueur pour augmenter le score
      */
-    void CollisionBetweenObjectsAndShips (CVPosition & Objects, CVPosition & StarShips, const bool countScore);
+    void CollisionBetweenObjectsAndShips (CVPosition & Objects, CVPosition & StarShips, const bool countScore, unsigned & score);  //Romain C
 
     /*!
      * \brief Gère les collisions (multiples) entre les missiles et les tropilles
      * \param Missiles [in, out] Vecteur des positions des missiles
      * \param Torpedos [in, out] Vecteur des positions des torpilles
      */
-    void CollisionBetweenMissilesAndTorpedos (CVPosition & Missiles, CVPosition & Torpedos);
+    void CollisionBetweenMissilesAndTorpedos (CVPosition & Missiles, CVPosition & Torpedos, unsigned & score);  //Romain C
 
     /*!
      * \brief Gère toutes les collisions du jeu
      * \param [in, out] Obj Liste des objets du jeu
      */
-    void ManageCollisions (CAObject & Obj);
+    void ManageCollisions (CAObject & Obj, unsigned & score);  //Romain C
 
     /*!
      * \brief Teste si l'envahisseur ou si le joueur ont gagné.
@@ -163,7 +175,7 @@ namespace nsSpaceInvader_AC
     /*!
      * \brief Fonction principale du jeu sans option.
      */
-    unsigned SpaceInvaders (void);
+    unsigned SpaceInvaders (unsigned & score, unsigned vies);
 
     /*!
      * \fn void ShowFile (const string & FileName)

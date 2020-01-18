@@ -129,7 +129,7 @@ namespace nsSpaceInvader_AC
     /*!
      * \brief Nombre de lignes de l'écran (de l'espace).
      */
-    const unsigned KSizeLine   = 20;   // Nombre de lignes de l'écran (de l'espace)
+    const unsigned KSizeLine   = 19;   // Nombre de lignes de l'écran (de l'espace)
 
     /*!
      * \brief Nombre de colonnes de l'écran (de l'espace).
@@ -150,4 +150,5 @@ namespace nsSpaceInvader_AC
      * \brief Alias vers une ligne vide de l'esapce.
      */
     const std::string KEmptyLine (KSizeSpace, KEmpty);  // Une ligne vide de la matrice
+
 }//namespace

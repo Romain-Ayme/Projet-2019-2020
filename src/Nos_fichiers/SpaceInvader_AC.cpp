@@ -27,11 +27,8 @@ using namespace nsSpaceInvader_AC;
 
 namespace nsSpaceInvader_AC
 {
-unsigned score;
-unsigned vies;
 
-
-void HighScore(unsigned score, const string & file)
+void HighScore(const unsigned score, const string & file) //Romain C
 {
     ifstream fichier(file);
     unsigned val;
@@ -42,10 +39,10 @@ void HighScore(unsigned score, const string & file)
     // Test si fichier existe, sinon le cree
     if (!fichier)
     {
-        ofstream f(file);
+        ofstream write(file);
         // Initialise avec un score à 0
-        f << ".................." << " " << 0 << endl;
-        f.close();
+        write << ".................." << " " << 0 << endl;
+        write.close();
     }
     fichier.close();
 
@@ -68,6 +65,7 @@ void HighScore(unsigned score, const string & file)
     if (scores.size() < 10 || score > scores[scores.size()-1])
     {
         // Insertion du nom du gagnant dans le tableau
+        cout << "votre score est de : " << score << endl;
         cout << "Entrez votre nom : ";
         cin >> name;
 
@@ -95,7 +93,7 @@ void HighScore(unsigned score, const string & file)
         }
 
         // Ecriture du fichier du nouveau tableau
-        ofstream f(file);
+        ofstream write(file);
         cout << "----------------------------------------" << endl;
         cout << "High score" << endl << endl;
 
@@ -107,12 +105,12 @@ void HighScore(unsigned score, const string & file)
             }
             cout << i+1 << setw(20) << names[i] << setw(10) << scores[i] << endl;
             Couleur (KReset);
-            f << names[i] << " " << scores[i] << endl;
+            write << names[i] << " " << scores[i] << endl;
         }
     }
 }
 
-void AfficheScore()
+void AfficheScore(unsigned score, unsigned vies) //Romain C
 {
     cout << "Score" << setw(KSizeSpace-3) << "Vies" << endl;
     cout << score << setw(KSizeSpace+2-to_string(score).size()) << vies << endl;
@@ -143,10 +141,10 @@ void PutAllObjects (const CAObject & Obj, CVString & Space)
     PutCVPosition (Obj[3], KTorpedo, Space);
 }// PutAllObjects ()
 
-void DisplaySpace (const CVString & Space)
+void DisplaySpace (const CVString & Space, unsigned score, unsigned vies) //Romain C
 {
     ClearScreen();
-    AfficheScore();
+    AfficheScore(score, vies); //Romain C
     cout << string (Space[0].size() + 2, '-') << endl;
     for (const string & Line : Space)
     {
@@ -300,7 +298,7 @@ void ManageInvaders (CAObject &Obj, unsigned & Direction, unsigned & WhatInvader
     }
 }// ManageInvaders ()
 
-void CollisionBetweenObjectsAndShips (CVPosition & Objects, CVPosition & StarShips, const bool countScore)
+void CollisionBetweenObjectsAndShips (CVPosition & Objects, CVPosition & StarShips, const bool countScore, unsigned & score)  //Romain C
 {
     for (unsigned i (0); i < Objects.size (); ++i)
     {
@@ -309,9 +307,9 @@ void CollisionBetweenObjectsAndShips (CVPosition & Objects, CVPosition & StarShi
         {
             if (Objects[i] == StarShips[j])
             {
-                if (countScore == true)
+                if (countScore == true) //Romain C
                 {
-                    score = score+10;
+                    score = score+10; //Romain C
                 }
                 StarShips.erase (StarShips.begin () +j);
                 Objects.erase (Objects.begin () +i);
@@ -322,7 +320,7 @@ void CollisionBetweenObjectsAndShips (CVPosition & Objects, CVPosition & StarShi
     }
 }//CollisionBetweenMissilesAndI ()
 
-void CollisionBetweenMissilesAndTorpedos (CVPosition & Missiles, CVPosition & Torpedos)
+void CollisionBetweenMissilesAndTorpedos (CVPosition & Missiles, CVPosition & Torpedos, unsigned & score) //Romain C
 {
     //la boucle est un peu bizare, mais elle permet de gérer
     //deux colisions en même temps entre deux missiles et torpilles
@@ -337,7 +335,7 @@ void CollisionBetweenMissilesAndTorpedos (CVPosition & Missiles, CVPosition & To
         for (; j < Torpedos.size (); ++j)
         {
             if (Missiles[i] != Torpedos[j]) continue;
-            score = score+1;
+            score = score+1; //Romain C
             Torpedos.erase (Torpedos.begin () +j);
             Missiles.erase (Missiles.begin () +i);
             break;
@@ -347,11 +345,11 @@ void CollisionBetweenMissilesAndTorpedos (CVPosition & Missiles, CVPosition & To
     }
 }//CollisionBetweenMissilesAndTorpedos ()
 
-void ManageCollisions (CAObject & Obj)
+void ManageCollisions (CAObject & Obj, unsigned & score)  //Romain C
 {
-    CollisionBetweenMissilesAndTorpedos (Obj[1], Obj[3]);
-    CollisionBetweenObjectsAndShips     (Obj[1], Obj[2], false);  //Moi
-    CollisionBetweenObjectsAndShips     (Obj[3], Obj[0], true);  //Invaders
+    CollisionBetweenMissilesAndTorpedos (Obj[1], Obj[3], score);
+    CollisionBetweenObjectsAndShips     (Obj[1], Obj[2], false, score);  //Moi //Romain C
+    CollisionBetweenObjectsAndShips     (Obj[3], Obj[0], true, score);  //Invaders //Romain C
 } //ManageCollisions
 
 unsigned Victory (const CVString & Space, const CAObject & Obj)
@@ -388,6 +386,8 @@ void StartMenu (const string & Path)
 
     while (true)
     {
+        unsigned score;  //Romain C
+        unsigned vies;  //Romain C
         ClearScreen();
         DisplaysDoc("../src/Nos_fichiers/Invader.txt", 33, 5);
         DisplaysDoc("../src/Nos_fichiers/SpaceInvadertext.txt", 11, 14);
@@ -416,14 +416,14 @@ void StartMenu (const string & Path)
         switch (C)
         {
             case '1'    :
-                score = 0;
-                vies = 3;
-                ClearScreen();
-                set_input_mode ();
-                ShowFile (1 == SpaceInvaders () ? Path + "lost.txt" : Path + "win.txt");
-                reset_input_mode();
-                HighScore(score, Path + "highscore.txt");
-                sleep(5);
+                score = 0;  //Romain C
+                vies = 3;  //Romain C
+                ClearScreen();  //Romain C
+                set_input_mode ();  //Romain C
+                ShowFile (1 == SpaceInvaders (score, vies) ? Path + "lost.txt" : Path + "win.txt");  //Romain C
+                reset_input_mode();  //Romain C
+                HighScore(score, Path + "highscore.txt");  //Romain C
+                sleep(5);  //Romain C
             break;
             case '2'   :
                 cout << "Config";
@@ -450,7 +450,7 @@ void StartMenu (const string & Path)
     }
 }
 
-unsigned SpaceInvaders (void)
+unsigned SpaceInvaders (unsigned & score, unsigned vies)  //Romain C
 {
     CVString Space;
     CAObject Obj;
@@ -466,7 +466,7 @@ unsigned SpaceInvaders (void)
         PutAllObjects (Obj, Space);
 
         //on affiche la matrice
-        DisplaySpace (Space);
+        DisplaySpace (Space, score, vies);  //Romain C
 
         //c'est a qui de jouer?
         if (KRatioMeInvaders != WhoIsToPlay++)
@@ -482,25 +482,30 @@ unsigned SpaceInvaders (void)
         //on fait monter les torpilles
         MoveUp (Obj[3]);
         //on gere les collisions
-        ManageCollisions (Obj);
+        ManageCollisions (Obj, score);  //romain C
         //On supprime les missiles qui sortent de l'air de jeu
         DeleteMissiles (Space, Obj[1]);
         //On supprime les torpilles qui sortent de l'air de jeu
         DeleteTorpedos (Obj[3]);
         //on teste si quelqu'un a gagner
         Vict = Victory (Space, Obj);
-        if (Vict == 1)
+        if (Vict == 1) //Romain C
         {
-            if(vies > 1)
+            if (vies > 1) //Romain C
             {
-                vies--;
-                InitSpace (Space, Obj);
-                Vict = 0;
+                vies--; //Romain C
+                InitSpace (Space, Obj); //Romain C
+                Vict = 0; //Romain C
             }
+        }
+        else if (Vict == 2) //Romain C
+        {
+            InitSpace (Space, Obj); //Romain C
+            Vict = 0; //Romain C
         }
     }
     PutAllObjects (Obj, Space);
-    DisplaySpace (Space);
+    DisplaySpace (Space, score, vies);  //Romain C
     return Vict;
 } // SpaceInvaders ()
 
